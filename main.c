@@ -5,17 +5,45 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+// #include <string.h>
 
 // Tamanho máximo das strings e dos vetores
 #define TAMANHO_STRING 50
 #define TAMANHO_VETOR 10000
 
-// Funções
+// Algoritmos de ordenação
 void insertion_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
                     FILE *out1);
 void merge_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
                 FILE *out2);
+
+// Funções específicas para strings
+size_t comprimento_string(const char *string) {
+  size_t tamanho = 0;
+  while (*string++) {
+    tamanho++;
+  }
+  return tamanho;
+}
+
+// TODO: Pegar nome melhor
+int comparar_strings(const char *primeira_string, const char *segunda_string) {
+  while (*primeira_string && (*primeira_string == *segunda_string)) {
+    primeira_string++;
+    segunda_string++;
+  }
+  return *(const unsigned char *)primeira_string -
+         *(const unsigned char *)segunda_string;
+}
+
+char *copiar_string(char *string_alvo, const char *string_fonte) {
+  char *p = string_alvo;
+  while (*string_alvo) {
+    *p++ = *string_fonte;
+  }
+  *p = '\0';
+  return string_alvo;
+}
 
 int main(int argc, char *argv[]) {
 
@@ -40,12 +68,12 @@ int main(int argc, char *argv[]) {
        fgets(vetor_insertion[i], sizeof(vetor_insertion[i]), in) != NULL;
        i++) {
     // Removendo o '\n' ao final da palavra, se necessário
-    size_t len = strlen(vetor_insertion[i]);
+    size_t len = comprimento_string(vetor_insertion[i]);
     if (vetor_insertion[i][len - 1] == '\n') {
       vetor_insertion[i][len - 1] = '\0';
     }
     // Copia o vetor para a versão a ser usada no merge sort
-    strcpy(vetor_merge[i], vetor_insertion[i]);
+    copiar_string(vetor_merge[i], vetor_insertion[i]);
   }
   fclose(in);
 
@@ -92,17 +120,17 @@ void insertion_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
   int i, j;
 
   for (i = 1; i < tamanho; i++) {
-    strcpy(chave, vetor[i]);
+    copiar_string(chave, vetor[i]);
     j = i - 1;
 
     // Move os elementos do vetor que são maiores que a chave
-    while (j >= 0 && strcmp(vetor[j], chave) > 0) {
-      strcpy(vetor[j + 1], vetor[j]);
+    while (j >= 0 && comparar_strings(vetor[j], chave) > 0) {
+      copiar_string(vetor[j + 1], vetor[j]);
       j--;
       (*passos)++;
     }
 
-    strcpy(vetor[j + 1], chave);
+    copiar_string(vetor[j + 1], chave);
     (*passos)++;
   }
 
@@ -125,11 +153,11 @@ void merge(char vetor[][TAMANHO_STRING], char esquerda[][TAMANHO_STRING],
   // Mescla dois subvetores ordenados em um único vetor ordenado, sempre
   // copiando o menor elemento das duas listas no vetor final
   while (i < tamanho_esq && j < tamanho_dir) {
-    if (strcmp(esquerda[i], direita[j]) <= 0) {
-      strcpy(vetor[k], esquerda[i]);
+    if (comparar_strings(esquerda[i], direita[j]) <= 0) {
+      copiar_string(vetor[k], esquerda[i]);
       i++;
     } else {
-      strcpy(vetor[k], direita[j]);
+      copiar_string(vetor[k], direita[j]);
       j++;
     }
     k++;
@@ -138,7 +166,7 @@ void merge(char vetor[][TAMANHO_STRING], char esquerda[][TAMANHO_STRING],
 
   // Copia os elementos restantes da metade esquerda, se houver
   while (i < tamanho_esq) {
-    strcpy(vetor[k], esquerda[i]);
+    copiar_string(vetor[k], esquerda[i]);
     i++;
     k++;
     (*passos)++;
@@ -146,7 +174,7 @@ void merge(char vetor[][TAMANHO_STRING], char esquerda[][TAMANHO_STRING],
 
   // Copia os elementos restantes da metade direita, se houver
   while (j < tamanho_dir) {
-    strcpy(vetor[k], direita[j]);
+    copiar_string(vetor[k], direita[j]);
     j++;
     k++;
     (*passos)++;
@@ -172,11 +200,11 @@ void merge_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
 
   // Preenche o vetor da metade esquerda
   for (int i = 0; i < meio; i++) {
-    strcpy(esquerda[i], vetor[i]);
+    copiar_string(esquerda[i], vetor[i]);
   }
   // Preenche o vetor da metade direita
   for (int i = meio; i < tamanho; i++) {
-    strcpy(direita[i - meio], vetor[i]);
+    copiar_string(direita[i - meio], vetor[i]);
   }
 
   // Chama merge_sort recursivamente para ambas as metades
