@@ -1,3 +1,4 @@
+// TODO: Resolver outros TODOs
 /*
 ** Nome: Matheus Gabriel Viana Araujo
 ** RA: 10420444
@@ -18,32 +19,9 @@ void merge_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
                 FILE *out2);
 
 // Funções específicas para strings
-size_t comprimento_string(const char *string) {
-  size_t tamanho = 0;
-  while (*string++) {
-    tamanho++;
-  }
-  return tamanho;
-}
-
-// TODO: Pegar nome melhor
-int comparar_strings(const char *primeira_string, const char *segunda_string) {
-  while (*primeira_string && (*primeira_string == *segunda_string)) {
-    primeira_string++;
-    segunda_string++;
-  }
-  return *(const unsigned char *)primeira_string -
-         *(const unsigned char *)segunda_string;
-}
-
-char *copiar_string(char *string_alvo, const char *string_fonte) {
-  char *p = string_alvo;
-  while (*string_alvo) {
-    *p++ = *string_fonte;
-  }
-  *p = '\0';
-  return string_alvo;
-}
+size_t comprimento_string(const char *string);
+int comparar_strings(const char *primeira_string, const char *segunda_string);
+char *copiar_string(char *string_alvo, const char *string_fonte);
 
 int main(int argc, char *argv[]) {
 
@@ -213,4 +191,32 @@ void merge_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
 
   // Mescla as duas metades
   merge(vetor, esquerda, meio, direita, tamanho - meio, passos, out2);
+}
+
+size_t comprimento_string(const char *string) {
+  size_t tamanho = 0;
+  while (*string++) {
+    tamanho++;
+  }
+  return tamanho;
+}
+
+// TODO: Pegar nome melhor
+int comparar_strings(const char *primeira_string, const char *segunda_string) {
+  while (*primeira_string && (*primeira_string == *segunda_string)) {
+    primeira_string++;
+    segunda_string++;
+  }
+  return *(const unsigned char *)primeira_string -
+         *(const unsigned char *)segunda_string;
+}
+
+char *copiar_string(char *string_alvo, const char *string_fonte) {
+  char *p = string_alvo;
+
+  // Copy each character from string_fonte to string_alvo
+  while ((*string_alvo++ = *string_fonte++))
+    ; // Loop until null terminator is copied
+
+  return p; // Return the start of the destination string
 }
