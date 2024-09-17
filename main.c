@@ -1,4 +1,3 @@
-// TODO: Resolver outros TODOs
 /*
 ** Nome: Matheus Gabriel Viana Araujo
 ** RA: 10420444
@@ -6,7 +5,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-// #include <string.h>
 
 // Tamanho máximo das strings e dos vetores
 #define TAMANHO_STRING 50
@@ -15,8 +13,10 @@
 // Algoritmos de ordenação
 void insertion_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
                     FILE *out1);
-void merge_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
-                FILE *out2);
+void merge_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos);
+void merge(char vetor[][TAMANHO_STRING], char esquerda[][TAMANHO_STRING],
+           int tamanho_esq, char direita[][TAMANHO_STRING], int tamanho_dir,
+           int *passos);
 
 // Funções específicas para strings
 size_t comprimento_string(const char *string);
@@ -73,6 +73,9 @@ int main(int argc, char *argv[]) {
 
   // MERGE SORT
 
+  // Realiza o merge sort
+  merge_sort(vetor_merge, TAMANHO_VETOR, &passos_merge);
+
   // Cria o arquivo de saída para o merge sort
   FILE *out2 = fopen("out2.txt", "w");
   if (out2 == NULL) {
@@ -80,8 +83,10 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  // Realiza o merge sort
-  merge_sort(vetor_merge, TAMANHO_VETOR, &passos_merge, out2);
+  // Escreve cada palavra ordenada no arquivo out2, uma por linha
+  for (int i = 0; i < TAMANHO_VETOR; i++) {
+    fprintf(out2, "%s\n", vetor_merge[i]);
+  }
   fclose(out2);
 
   // Exibe o número total de passos do merge sort
@@ -122,7 +127,7 @@ void insertion_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
 
 void merge(char vetor[][TAMANHO_STRING], char esquerda[][TAMANHO_STRING],
            int tamanho_esq, char direita[][TAMANHO_STRING], int tamanho_dir,
-           int *passos, FILE *out2) {
+           int *passos) {
 
   int i = 0;
   int j = 0;
@@ -157,15 +162,9 @@ void merge(char vetor[][TAMANHO_STRING], char esquerda[][TAMANHO_STRING],
     k++;
     (*passos)++;
   }
-
-  // Escreve cada palavra mesclada no arquivo out2, uma por linha
-  for (int x = 0; x < k; x++) {
-    fprintf(out2, "%s\n", vetor[x]);
-  }
 }
 
-void merge_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
-                FILE *out2) {
+void merge_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos) {
   if (tamanho <= 1) {
     return;
   }
@@ -186,11 +185,11 @@ void merge_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos,
   }
 
   // Chama merge_sort recursivamente para ambas as metades
-  merge_sort(esquerda, meio, passos, out2);
-  merge_sort(direita, tamanho - meio, passos, out2);
+  merge_sort(esquerda, meio, passos);
+  merge_sort(direita, tamanho - meio, passos);
 
   // Mescla as duas metades
-  merge(vetor, esquerda, meio, direita, tamanho - meio, passos, out2);
+  merge(vetor, esquerda, meio, direita, tamanho - meio, passos);
 }
 
 size_t comprimento_string(const char *string) {
@@ -201,7 +200,6 @@ size_t comprimento_string(const char *string) {
   return tamanho;
 }
 
-// TODO: Pegar nome melhor
 int comparar_strings(const char *primeira_string, const char *segunda_string) {
   while (*primeira_string && (*primeira_string == *segunda_string)) {
     primeira_string++;
@@ -214,9 +212,9 @@ int comparar_strings(const char *primeira_string, const char *segunda_string) {
 char *copiar_string(char *string_alvo, const char *string_fonte) {
   char *p = string_alvo;
 
-  // Copy each character from string_fonte to string_alvo
+  // Copia cada caractere da string_fonte para string_alvo
   while ((*string_alvo++ = *string_fonte++))
-    ; // Loop until null terminator is copied
+    ; // Loop até que o terminador nulo seja copiado
 
-  return p; // Return the start of the destination string
+  return p; // Retorna o início da string de destino
 }
