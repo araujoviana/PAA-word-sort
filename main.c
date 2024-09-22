@@ -20,7 +20,7 @@ void merge(char vetor[][TAMANHO_STRING], char esquerda[][TAMANHO_STRING],
            int tamanho_esq, char direita[][TAMANHO_STRING], int tamanho_dir,
            int *passos);
 
-// Funções específicas para strings
+// Funções específicas para manipular strings
 size_t comprimento_string(const char *string);
 int comparar_strings(const char *primeira_string, const char *segunda_string);
 char *copiar_string(char *string_alvo, const char *string_fonte);
@@ -194,6 +194,9 @@ void merge_sort(char vetor[][TAMANHO_STRING], int tamanho, int *passos) {
   merge(vetor, esquerda, meio, direita, tamanho - meio, passos);
 }
 
+// Funções de manipulação de strings
+
+// Substitui strlen
 size_t comprimento_string(const char *string) {
   size_t tamanho = 0;
   while (*string++) {
@@ -202,6 +205,7 @@ size_t comprimento_string(const char *string) {
   return tamanho;
 }
 
+// Substitui strcmp
 int comparar_strings(const char *primeira_string, const char *segunda_string) {
   while (*primeira_string && (*primeira_string == *segunda_string)) {
     primeira_string++;
@@ -211,12 +215,12 @@ int comparar_strings(const char *primeira_string, const char *segunda_string) {
          *(const unsigned char *)segunda_string;
 }
 
+// Substitui strcpy
 char *copiar_string(char *string_alvo, const char *string_fonte) {
   char *p = string_alvo;
 
-  // Copia cada caractere da string_fonte para string_alvo
   while ((*string_alvo++ = *string_fonte++))
-    ; // Loop até que o terminador nulo seja copiado
+    ;
 
   return p; // Retorna o início da string de destino
 }
