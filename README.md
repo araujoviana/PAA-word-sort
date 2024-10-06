@@ -13,7 +13,7 @@ This project provides a C program that reads a wordlist from a text file, sorts 
 ## Requirements
 - A text file (`in`) containing words, each separated by a newline.
 
-The code was tested using the MIT `wordlist.txt` file.
+The code was tested using a shuffled version of the MIT `wordlist.txt` file.
 
 ## Installation
 
