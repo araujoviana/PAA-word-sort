@@ -5,6 +5,11 @@
 ** RA: 10425707
 */
 
+/*
+** O arquivo de 10000 palavras foi randomizado usando o comando shuf,
+** e as palavras são separadas por linha.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -32,7 +37,7 @@ int main(int argc, char *argv[]) {
 
   // Abre o arquivo contendo as 10000 strings aleatórias,
   // as strings são separadas por '\n'
-  FILE *in = fopen("in.txt", "r");
+  FILE *in = fopen("in", "r");
   if (in == NULL) {
     printf("Erro ao abrir o arquivo\n");
     return 1;
@@ -60,7 +65,7 @@ int main(int argc, char *argv[]) {
   // INSERTION SORT
 
   // Cria o arquivo de saída para o insertion sort
-  FILE *out1 = fopen("out1.txt", "w");
+  FILE *out1 = fopen("out1", "w");
   if (out1 == NULL) {
     printf("Erro ao criar arquivo out1\n");
     return 1;
@@ -79,7 +84,7 @@ int main(int argc, char *argv[]) {
   merge_sort(vetor_merge, TAMANHO_VETOR, &passos_merge);
 
   // Cria o arquivo de saída para o merge sort
-  FILE *out2 = fopen("out2.txt", "w");
+  FILE *out2 = fopen("out2", "w");
   if (out2 == NULL) {
     printf("Erro ao criar arquivo out2\n");
     return 1;
