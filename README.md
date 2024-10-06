@@ -13,7 +13,7 @@ This project provides a C program that reads a wordlist from a text file, sorts 
 ## Requirements
 - A text file (`in`) containing words, each separated by a newline.
 
-The code was tested using a shuffled version of the MIT `wordlist.txt` file.
+The code was tested using a shuffled version of the MIT `wordlist.txt` file, it was **NOT** tested with other files.
 
 ## Installation
 
@@ -33,6 +33,10 @@ The code was tested using a shuffled version of the MIT `wordlist.txt` file.
 ## Usage
 
 The program expects a file named in.txt in the working directory. The reason for this is that this repository is based on a school assignment where it was a requirement to name the input file `in`.
+
+Upon execution, the program will generate two output files:
+- `out1`: Contains the sorted contents of the `in` file using **Insertion Sort**.
+- `out2`: Contains the sorted contents of the `in` file using **Merge Sort**.
 
 ## License
 
