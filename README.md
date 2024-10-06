@@ -1,14 +1,10 @@
 # PAA-word-sort
 
-Sorting Wordlist with Insertion Sort and Merge Sort
+Sorts a wordlist with Insertion Sort and Merge Sort
 
 This project provides a C program that reads a wordlist from a text file, sorts it using **Insertion Sort** and **Merge Sort**, and displays the number of steps each algorithm took. It processes words separated by newlines.
 
 **Note**: The code is written in Brazilian Portuguese.
-
-## Features
-- Sorts words using **Insertion Sort** and **Merge Sort**
-- Outputs the number of steps taken by each sorting algorithm
 
 ## Requirements
 - A text file (`in`) containing words, each separated by a newline.
